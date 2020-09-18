@@ -1,0 +1,77 @@
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="index_styles.css" media="screen, print">
+<script src="locals.js"></script>
+<script src="path.js"></script>
+<script src="basics.js"></script>
+<script src="stuffs.js"></script>
+</head>
+<body>
+<div id="forStuffs" class="forStuffs">fghrh</div>
+<div id="forTextStore" class="store">.</div>
+<div id="forAnimation" class="animationLevel"></div>
+<div id="wrapper">
+<canvas id="canvass">CANVAS</canvas>
+</div>
+</body>
+<script>
+//=======SETTINGS=======
+//-------CONSTANTS------
+const GAMESPEED=20;			//Скорость анимации (мс).
+const MONEYSTART=300;		//стартовая сумма для покупки на персонажа
+const TAX=5;				//процент скидки для покупки в автомате по отношению к фоновому магазину.
+const ONLINESTORE=true;		//наличие фонового магазина (оружия).
+const DROPPING=true;		//сброс вещей погибшего игрока.
+const MONEYHITMULTIPLIER=10;//множитель конвертации хитов на деньги при попадании. Деньги = множитель*хиты.
+
+//==========GAME=======
+//-------SET CONTEXT---
+const canvas=	document.getElementById("canvass");
+const context=	canvas.getContext("2d");
+
+//---------------------
+const backImg=		new Image();
+	backImg.src=	"back_.jpg";
+	
+var game=			new gameClass(STUFFSDATA,ALLPATHS);
+	game.toCreate();
+	
+var timer;
+
+function animate(){
+	context.drawImage(backImg,0,0,backImg.width,backImg.height);
+	
+	game.draw(context);
+};
+
+backImg.onload=function(){
+	canvas.width=	this.naturalWidth;
+	canvas.height=	this.naturalHeight;
+	timer=			window.setInterval('animate()',GAMESPEED);
+};
+
+//перехват клавиш
+document.addEventListener("DOMContentLoaded",function(){
+	canvas.addEventListener("click",function(event){
+		alert(event.offsetX+" : "+event.offsetY*0.97);
+	});
+	document.addEventListener("keydown",function(){game.keyOn(event.code)});
+	document.addEventListener("keyup",function(){game.keyOff(event.code)});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>
